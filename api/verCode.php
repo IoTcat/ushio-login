@@ -13,8 +13,7 @@ $type = $_REQUEST['type'];
 
 if(!isset($usr)) die();
 if(!isset($code)) die();
-if(!isset($type) || $type != 'tel' || $type != 'email') die();
-
+if(!isset($type) || ($type != 'tel' && $type != 'email')) die();
 
 if($redis->exists('vercode/'.$usr) && $redis->get('vercode/'.$usr) == $code){
 
@@ -37,7 +36,7 @@ if($redis->exists('vercode/'.$usr) && $redis->get('vercode/'.$usr) == $code){
 			"tel"=>null,
 			"email"=>null,
 			"hash"=> hash('sha256', $usr.$code.$type.time()),
-			"group"=>"client",
+//			"group"=>"client",
 			"comments"=>"From ushio-login",
 			"created_at"=>date("Y-m-d H:i:s", time()),
 			"updated_at"=>date("Y-m-d H:i:s", time())

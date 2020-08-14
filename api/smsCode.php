@@ -27,5 +27,5 @@ $res = curl_exec($curl);
 curl_close($curl);
 
 echo json_encode(array(
-	"code": 200
+	"code"=> 200
 ));

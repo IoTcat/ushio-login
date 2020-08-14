@@ -50,16 +50,24 @@ $(function(){
 
 	$('#veri-code').keyup(function(event) {
 		$('.tel-warn').addClass('hide');
-		checkBtn();
+        checkCode($('#veri-code').val());
 	});
 
 	// 按钮是否可点击
 	function checkBtn()
 	{
 
+        $(".log-btn").off('click').addClass("off");
 	}
 
+    $('.z').click(function(){
 
+        if(($('#agree').val() == "1") && hash.length){
+            sendBtn();
+        }else{
+            checkBtn();
+        }
+    });
 
 
 	function checkTo(phone){
@@ -94,17 +102,22 @@ $(function(){
 			}
 
 		}
+
+        usr = phone;
 		return status;
 	}
 
 	function checkCode(pCode){
+		checkBtn();
 		if (pCode == '') {
 			$('.error').removeClass('hide').text('请输入验证码');
 			return false;
-		} else {
+		} else if(pCode.length ==6){
 			$('.error').addClass('hide');
 
+            code = pCode;
 			$.get('/api/verCode.php?type='+((tab == 'account_number')?'email':'tel')+'&usr='+usr+'&code='+code, function(data){
+                data = JSON.parse(data);
 				if(data.code == 200){
 
 					hash = data.hash;
@@ -122,22 +135,30 @@ $(function(){
 				    oSend.show();
 	                oEm.text("120");
 	                oTime.addClass("hide");
-	                $(".log-btn").removeClass("off");
+                    sendBtn();
 	                $('.error').addClass('hide')
 				}else{
 					$('.error').removeClass('hide').text('验证码错误！');
+                    checkBtn();
 				}
 
 			});
 
-
-			return true;
-		}
+            return true;
+		}else{
+            return false;
+        }
 	}
+
+
 
 	// 登录点击事件
 	function sendBtn(){
+
+    $(".log-btn").removeClass("off");
+    $('.log-btn').click(function(){
 		$.get('/api/checkAccount.php?hash='+hash, function(data){
+            data = JSON.parse(data);
 			if(data.code == 200){
 				tips.success({message: '登录/注册成功！'})
 				window.location.href="https://www.eee.dog/";
@@ -145,6 +166,7 @@ $(function(){
 				tips.warning({message: '登录/注册失败！'})
 			}
 		});
+    });
 	}
 
 	// 登录的回车事件
@@ -190,6 +212,7 @@ $(function(){
 		            async: true,
 		            data: {email: to, tel: to},
 		            success:function(data){
+                    data = JSON.parse(data);
 		                if (data.code == '200') {
 
 		                } else {

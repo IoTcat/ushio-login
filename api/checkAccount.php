@@ -15,10 +15,15 @@ if(!isset($hash)) die();
 if($redis->exists('account/'.$hash)){
 
 
-	$arr = json_decode($redis->get('account/'.$hash));
+	$arr = json_decode($redis->get('account/'.$hash), true);
 
 	if(!$arr['isExist']){
 		$arr_t = $arr;
+        foreach($arr_t as $i => $t){
+            if($t == ''){
+                unset($arr_t[$i]);
+            }
+        }
 		unset($arr_t['isExist']);
 		$cnn = db__connect();
 		db__pushData($cnn, "account", $arr_t);
