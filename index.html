@@ -57,7 +57,12 @@
                     <span class="z"><i class="icon-ok-sign boxcol" nullmsg="请同意!"></i></span>
                     <input type="hidden" id="agree" name="agree" value="1">
                     <div class="Validform_checktip"></div>
-                    <p>我已阅读并接受 <a href="#" target="_brack">《XXXX协议说明》</a></p>
+                    <p>我已阅读并接受 <a id="ag" href="#">《Ushio用户协议说明》</a></p>
+                    <script>$('#ag').click(function(){tips.info({
+timeout: 150000,
+message: '1. 为了更好地提供服务，本站需要您提供一个联系方式。本站承诺不会将此联系方式透露给任何其它客体，此联系方式仅用作本站通知您的一种方式。<br>2. 请您在使用本站服务时，务必遵守本地法律法规。对于类似原因引起的纠纷，本站概不负责。<br>3. 请勿将账户给与其它人使用，一经发现本站有权停止此账户在本站的所有权限，并将相关行为人拉入黑名单。'
+})})</script>
+
                 </div>
             <!--<div class="r-forget cl">
                 <a href="./reg.html" class="z">账号注册</a>

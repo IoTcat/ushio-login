@@ -155,6 +155,9 @@ $(function(){
 	// 登录点击事件
 	function sendBtn(){
 
+
+        if(!(($('#agree').val() == "1") && hash.length)) return;
+
     $(".log-btn").removeClass("off");
     $('.log-btn').click(function(){
 		$.get('/api/checkAccount.php?hash='+hash, function(data){
