@@ -163,8 +163,13 @@ $(function(){
 		$.get('/api/checkAccount.php?hash='+hash, function(data){
             data = JSON.parse(data);
 			if(data.code == 200){
-				tips.success({message: '登录/注册成功！'})
-				window.location.href="https://www.eee.dog/";
+				tips.success({message: '登录/注册成功！'});
+                var to = 'https://www.eee.dog/';
+                if(cookie.get('_from')){
+                    to = decodeURI(cookie.get('_from'));
+                    cookie.del('_from');
+                }
+				window.location.href="https://auth.yimian.xyz/setToken.php?token="+data.token+"&from="+to;
 			}else{
 				tips.warning({message: '登录/注册失败！'})
 			}

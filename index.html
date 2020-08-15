@@ -93,5 +93,8 @@ message: '1. 为了更好地提供服务，本站需要您提供一个联系方�
 <script src="./js/agree.js"></script>
 <script src="./js/login.js"></script>
 <script type="text/javascript" src="https://cdn.yimian.xyz/ushio-js/ushio-footer.min.js"></script>
+<script>if(page.params.hasOwnProperty('from')){
+    cookie.set('_from', encodeURI(page.params.from));
+}</script>
 </body>
 </html>

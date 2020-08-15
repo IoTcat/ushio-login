@@ -48,7 +48,8 @@ if($redis->exists('vercode/'.$usr) && $redis->get('vercode/'.$usr) == $code){
 			$arr['email'] = $usr;
 		}
 		$arr = array_merge($arr, array("isExist"=>false));
-	}
+    }
+
 	$redis->set('account/'.$arr['hash'], json_encode($arr));
     echo json_encode(array("code"=> 200, "hash"=>$arr['hash'], "isExist"=>$arr['isExist'], "message" => "Verified successfully!"));
 
