@@ -2,7 +2,7 @@
 
 include './functions.php';
 
-function updateSession($cnn, $hash){
+function updateSession($cnn, $hash, $redis){
     $res = db__getData($cnn, "account", "hash", $hash);
     $arr = $res[0];
     foreach($arr as $key => $val){
@@ -30,7 +30,7 @@ if(!db__rowNum($cnn, "account", "hash", $hash)){
 if(isset($nickname)){
 
     db__pushData($cnn, "account", array("nickname"=>$nickname), array("hash"=>$hash));
-    updateSession($cnn, $hash);
+    updateSession($cnn, $hash, $redis);
     echo json_encode(array("code"=> 200, "message" => "Update successfully!"));
     die();
 }
@@ -59,7 +59,7 @@ if($redis->exists('account/'.$thash)){
     }
 
     db__pushData($cnn, "account", $info, array("hash"=>$hash));
-    updateSession($cnn, $hash);
+    updateSession($cnn, $hash, $redis);
     echo json_encode(array("code"=> 200, "message" => "Update successfully!"));
 
 }else{
