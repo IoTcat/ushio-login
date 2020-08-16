@@ -14,7 +14,7 @@ if(!isset($hash)) die();
 
 if($redis->exists('account/'.$hash)){
 
-
+    $cnn = db__connect();
 	$arr = json_decode($redis->get('account/'.$hash), true);
 
 	if(!$arr['isExist']){
@@ -33,6 +33,12 @@ if($redis->exists('account/'.$hash)){
 
     $token = hash('sha256', $hash.time());
     $redis->set('auth/token/'.$token, $hash);
+    db__pushData($cnn, "token", array(
+        "token"=>$token,
+        "hash"=>$hash,
+        "created_at"=>date("Y-m-d H:i:s", time()),
+        "state"=>'1'
+    ));
 
     echo json_encode(array("code"=> 200, "token"=>$token, "message" => "Verified successfully!"));
 
