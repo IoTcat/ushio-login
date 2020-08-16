@@ -182,7 +182,7 @@ $(function(){
     $(".log-btn").removeClass("off");
     $('.log-btn').click(function(){
     	session.onload(function(){
-			$.get('/api/checkUpdate.php?thash='+hash+'&hash='session.get('hash'), function(data){
+			$.get('/api/checkUpdate.php?thash='+hash+'&hash='+session.get('hash'), function(data){
 	            data = JSON.parse(data);
 				if(data.code == 200){
 					tips.success({message: '更新成功！'});
