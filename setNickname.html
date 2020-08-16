@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Ushio Login</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="Login,ushio,iotcat,呓喵酱,yimian">
+    <meta name="Description" content="Login module for Ushio ecosystem.">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/background.css">
+    <style type="text/css">
+        #site-landing {
+            position:relative;
+            height: 100%;
+            width: 100%;
+           background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+        }
+        html,body{
+            overflow: hidden;
+            height: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <link rel="stylesheet" href="./css/reg.css">
+    <script type="text/javascript">block_aplayer = true;</script>
+    <script src="https://cdn.yimian.xyz/ushio-js/ushio-head.min.js"></script>
+</head>
+<body>
+<div id="ajax-hook"></div>
+
+<div class="wrap"><div id="site-landing"></div>
+    <div class="wpn">
+        <div class="form-data find_password" style="top: 30%;">
+            <h4>输入昵称</h4>
+            <p class="p-input pos">
+                <label for="nickname">昵称</label>
+                <input type="text" id="nickname">
+                <span class="tel-warn pc_tel-err hide"><em></em><i class="icon-warn"></i></span>
+            </p>
+            <button class="lang-btn next">更新</button>
+            <p class="right">© 2018-<script type="text/javascript">document.write(new Date().getFullYear())</script> <a href="https://iotcat.me">iotcat</a> | Powered by <a href="https://ushio.cool">Ushio</a></p>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+    /* 窄屏缩小框 */
+    $(function(){
+        if($(window).width() < 400){
+        document.body.style.zoom="0.8";
+        $('#site-landing').css('height', '150%');
+        }
+    });
+</script>
+<script type="text/javascript" src="js/polygonizr.min.js"></script>
+<script type="text/javascript">$('#site-landing').polygonizr();</script>
+<script src="./js/agree.js"></script>
+<script type="text/javascript" src="https://cdn.yimian.xyz/ushio-js/ushio-footer.min.js"></script>
+<script>if(page.params.hasOwnProperty('from')){
+    cookie.set('_from', encodeURI(page.params.from));
+}</script>
+<script type="text/javascript">
+
+    session.onload(function(){
+        if(!session.get('hash')){
+            window.location.href = '/login.html';
+        }
+    });
+    $('#nickname').keyup(function(){
+
+        var s = $(this).val();
+        var spec = `'~^&|{}[]"?><:;.,=-)(*%#!/\\\``;
+        s.split("").forEach(function(item){
+            if(spec.split("").indexOf(item)!=-1){
+                s = s.substr(0, s.length - 1)
+                $('#nickname').val(s);
+            }
+        });
+    });
+
+    $('.lang-btn').click(function(){
+        var nickname = $('#nickname').val();
+        if(nickname.length < 3){
+            tips.warning({
+                message: "昵称太短啦！！"
+            });
+            return;
+        }
+        if(nickname.length > 40){
+            tips.warning({
+                message: "昵称太长啦！！"
+            });
+            return;
+        }
+        session.onload(function(){
+            $.get('/api/checkUpdate.php?hash='+session.get('hash')+'&nickname='+nickname, function(data){
+                data = JSON.parse(data);
+                if(data.code == 200){
+                    tips.success({
+                        message: '更新成功！'
+                    });
+                    var to = 'https://www.eee.dog/';
+                    if(cookie.get('_from')){
+                        to = decodeURI(cookie.get('_from'));
+                        cookie.del('_from');
+                    }
+                    window.location.href=to;
+                }else{
+                    tips.warning({
+                        message: data.message
+                    });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

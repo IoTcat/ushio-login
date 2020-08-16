@@ -40,10 +40,19 @@ $(function(){
 	        $("#lab_num").html('手机号');
 	        $('.change-login').hide();
 	    }
-	    if(page.params.require == 'email'){
-	        $('.change-login').hide();
-	    }
+	    session.onload(function(){
+	    	if(!session.get('hash')){
+	    		window.location.href = '/login.html?require='+page.params.require;
+	    	}
+	    });
+	}else{
+	    session.onload(function(){
+	    	if(!session.get('hash')){
+	    		window.location.href = '/login.html';
+	    	}
+	    });
 	}
+	$('.change-login').hide();
 
 	$('#num').keyup(function(event) {
 		$('.tel-warn').addClass('hide');
@@ -138,11 +147,6 @@ $(function(){
 				if(data.code == 200){
 
 					hash = data.hash;
-					if(data.isExist){
-						$('.lang-btn').html('登录');
-					}else{
-						$('.lang-btn').html('注册');
-					}
 					var oTime = $(".form-data .time"),
 					oSend = $(".form-data .send"),
 					oEm = $(".form-data .time em");
@@ -177,20 +181,22 @@ $(function(){
 
     $(".log-btn").removeClass("off");
     $('.log-btn').click(function(){
-		$.get('/api/checkAccount.php?hash='+hash, function(data){
-            data = JSON.parse(data);
-			if(data.code == 200){
-				tips.success({message: '登录/注册成功！'});
-                var to = 'https://www.eee.dog/';
-                if(cookie.get('_from')){
-                    to = decodeURI(cookie.get('_from'));
-                    cookie.del('_from');
-                }
-				window.location.href="https://auth.yimian.xyz/setToken.php?token="+data.token+"&from="+to;
-			}else{
-				tips.warning({message: '登录/注册失败！'})
-                setTimeout(()=>{window.location.reload()}, 2000);
-			}
+    	session.onload(function(){
+			$.get('/api/checkUpdate.php?thash='+hash+'&hash='session.get('hash'), function(data){
+	            data = JSON.parse(data);
+				if(data.code == 200){
+					tips.success({message: '更新成功！'});
+	                var to = 'https://www.eee.dog/';
+	                if(cookie.get('_from')){
+	                    to = decodeURI(cookie.get('_from'));
+	                    cookie.del('_from');
+	                }
+					window.location.href=to;
+				}else{
+					tips.warning({message: data.message});
+	                setTimeout(()=>{window.location.reload()}, 2000);
+				}
+			});
 		});
     });
 	}
