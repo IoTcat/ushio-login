@@ -172,6 +172,7 @@ $(function(){
 				window.location.href="https://auth.yimian.xyz/setToken.php?token="+data.token+"&from="+to;
 			}else{
 				tips.warning({message: '登录/注册失败！'})
+                window.location.reload();
 			}
 		});
     });
