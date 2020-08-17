@@ -2,6 +2,15 @@
 
 include './functions.php';
 
+function updateSession($cnn, $hash, $redis){
+    $res = db__getData($cnn, "account", "hash", $hash);
+    $arr = $res[0];
+    foreach($arr as $key => $val){
+        $redis->hSet('session/dialog/'.$hash, $key, $val);
+    }
+}
+
+
 $redis = new redis();
 $redis->connect('redis',6379);
 
@@ -31,16 +40,11 @@ if($redis->exists('account/'.$hash)){
 		$redis->set('account/'.$hash, json_encode($arr));
 	}
 
-    $token = hash('sha256', $hash.time());
-    $redis->set('auth/token/'.$token, $hash);
-    db__pushData($cnn, "token", array(
-        "token"=>$token,
-        "hash"=>$hash,
-        "created_at"=>date("Y-m-d H:i:s", time()),
-        "state"=>'1'
-    ));
+    //$token = hash('sha256', $hash.time());
+    //$redis->set('auth/token/'.$token, $hash);
 
-    echo json_encode(array("code"=> 200, "token"=>$token, "message" => "Verified successfully!"));
+    updateSession($cnn, $hash, $redis);   
+    echo json_encode(array("code"=> 200, "token"=>$hash, "message" => "Verified successfully!"));
 
 }else{
     echo json_encode(array("code"=> 500, "message"=>"Error!!"));

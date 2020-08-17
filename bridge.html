@@ -15,17 +15,39 @@
 	<div id="loader-wrapper" ><div id="loader"></div><div class="loader-section section-left"></div><div class="loader-section section-right"></div><div class="load_title">正在检测您的权限配置( • ̀ω•́ )✧<br><span id="info">Check auth..</span></div></div><script>function newUrl(url){if(url.indexOf("?")==-1){if(url.indexOf("#")==-1){return url+"?t="+(new Date).valueOf()}else{return url.slice(0,url.indexOf("#"))+"?t="+(new Date).valueOf()+url.slice(url.indexOf("#"))}}else{if(url.indexOf("#")==-1){return url+"&t="+(new Date).valueOf()}else{return url.slice(0,url.indexOf("#"))+"&t="+(new Date).valueOf()+url.slice(url.indexOf("#"))}}};setTimeout(function(res){document.getElementById("info").innerHTML="Token Checking..";setTimeout(function(res){document.getElementById("info").innerHTML="Decide Best Strategy..";setTimeout(function(res){document.getElementById("info").innerHTML="Connecting..";setTimeout(function(res){document.getElementById("info").innerHTML="Loading.."},600)},800)},800)},800);</script>
 <script type="text/javascript" src="https://cdn.yimian.xyz/ushio-js/ushio-footer.min.js"></script>
 <script>
+setTimeout(()=>{window.location.reload()},10000);
 	if(page.params.hasOwnProperty('from')){
     	cookie.set('_from', encodeURI(page.params.from));
 	}
-        function dexec(){
-            if(page.params.hasOwnProperty('require')){
-                window.location.href = '/bridge.html?require='+page.params.require;
-            }else{
-                window.location.href = '/bridge.html';
-            }
-        }
-        setTimeout(dexec, 0);
+	session.onload(function(){
+		if(session.get('group') == 'anonymous'){
+			if(page.params.hasOwnProperty('require')){
+				window.location.href='/login.html?require='+page.params.require;
+			}else{
+				window.location.href='/login.html';
+			}
+		}else{
+			if(!page.params.hasOwnProperty('require')){
+				window.location.href="https://user.yimian.xyz/";
+				return;
+			}
+			if(page.params.require == 'tel' || page.params.require == 'email'){
+				window.location.href = "/update.html?require="+page.params.require;
+				return;
+			}
+			if(page.params.require == 'nickname'){
+				window.location.href = "/setNickname.html";
+				return;
+			}
+			window.location.href='https://user.yimian.xyz/';
+		}
+	});
 </script>
+<script type="text/javascript" src="js/polygonizr.min.js"></script>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <link rel="stylesheet" href="./css/reg.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/background.css">
 </body>
 </html>

@@ -186,7 +186,7 @@ $(function(){
                     to = decodeURI(cookie.get('_from'));
                     cookie.del('_from');
                 }
-				window.location.href="https://auth.yimian.xyz/setToken.php?token="+data.token+"&from="+to;
+				window.location.href="https://auth.yimian.xyz/checkin.php?token="+data.token+"&from="+to;
 			}else{
 				tips.warning({message: '登录/注册失败！'})
                 setTimeout(()=>{window.location.reload()}, 2000);
