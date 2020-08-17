@@ -18,14 +18,35 @@
 	if(page.params.hasOwnProperty('from')){
     	cookie.set('_from', encodeURI(page.params.from));
 	}
-        function dexec(){
-            if(page.params.hasOwnProperty('require')){
-                window.location.href = '/bridge.html?require='+page.params.require;
-            }else{
-                window.location.href = '/bridge.html';
-            }
-        }
-        setTimeout(dexec, 0);
+	session.onload(function(){
+		if(session.get('group') == 'anonymous'){
+			if(page.params.hasOwnProperty('require')){
+				window.location.href='/login.html?require='+page.params.require;
+			}else{
+				window.location.href='/login.html';
+			}
+		}else{
+			if(!page.params.hasOwnProperty('require')){
+				window.location.href="https://user.yimian.xyz/";
+				return;
+			}
+			if(page.params.require == 'tel' || page.params.require == 'email'){
+				window.location.href = "/update.html?require="+page.params.require;
+				return;
+			}
+			if(page.params.require == 'nickname'){
+				window.location.href = "/setNickname.html";
+				return;
+			}
+			window.location.href='https://user.yimian.xyz/';
+		}
+	});
 </script>
+<script type="text/javascript" src="js/polygonizr.min.js"></script>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <link rel="stylesheet" href="./css/reg.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/background.css">
 </body>
 </html>

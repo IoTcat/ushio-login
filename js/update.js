@@ -41,13 +41,13 @@ $(function(){
 	        $('.change-login').hide();
 	    }
 	    session.onload(function(){
-	    	if(!session.get('hash')){
+	    	if(session.get('group') == 'anonymous' || !session.get('hash')){
 	    		window.location.href = '/login.html?require='+page.params.require;
 	    	}
 	    });
 	}else{
 	    session.onload(function(){
-	    	if(!session.get('hash')){
+	    	if(session.get('group') == 'anonymous' || !session.get('hash')){
 	    		window.location.href = '/login.html';
 	    	}
 	    });

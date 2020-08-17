@@ -62,7 +62,7 @@
 <script type="text/javascript">
 
     session.onload(function(){
-        if(!session.get('hash')){
+        if(session.get('group') == 'anonymous' || !session.get('hash')){
             window.location.href = '/login.html';
         }
     });
