@@ -181,7 +181,7 @@ $(function(){
             data = JSON.parse(data);
 			if(data.code == 200){
 				tips.success({message: '登录/注册成功！'});
-                var to = 'https://www.eee.dog/';
+                var to = 'https://guide.yimian.xyz/';
                 if(cookie.get('_from')){
                     to = decodeURI(cookie.get('_from'));
                     cookie.del('_from');

@@ -186,7 +186,7 @@ $(function(){
 	            data = JSON.parse(data);
 				if(data.code == 200){
 					tips.success({message: '更新成功！'});
-	                var to = 'https://www.eee.dog/';
+	                var to = 'https://user.yimian.xyz/';
 	                if(cookie.get('_from')){
 	                    to = decodeURI(cookie.get('_from'));
 	                    cookie.del('_from');
