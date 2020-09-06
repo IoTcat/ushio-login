@@ -23,9 +23,9 @@
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/iconfont.css">
     <link rel="stylesheet" href="./css/reg.css">
-    <script type="text/javascript">block_aplayer = true;</script>
+    <script type="text/javascript">block_aplayer = true;lang = ['zh', 'en'];</script>
     <script src="https://cdn.yimian.xyz/ushio-js/ushio-head.min.js"></script>
-
+    <script type="text/javascript">page.proj = 'iotcat/ushio-login';</script>
 </head>
 <body>
 
@@ -35,22 +35,22 @@
         <div class="form-data pos" id="box" >
             <a href=""><img src="./img/logo.png" class="head-logo"></a>
             <div class="change-login hide">
-                <p class="account_number on">邮箱登录</p>
-                <p class="message">短信登录</p>
+                <p class="account_number on"><span class=".zh">邮箱登录</span><span class=".en">By Email</span></p>
+                <p class="message"><span class=".zh">短信登录</span><span class=".en">By SMS</span></p>
             </div>
             <div class="form1">
                 <p class="p-input pos">
-                    <label for="num" id="lab_num">邮箱</label>
+                    <label for="num" id="lab_num"><span class=".zh">邮箱</span><span class=".en">Email</span></label>
                     <input type="text" id="num">
                     <input type="number" id="num2" class="hide">
-                    <span class="tel-warn num-err hide"><em>账号或密码错误，请重新输入</em><i class="icon-warn"></i></span>
+                    <span class="tel-warn num-err hide"><em><span class=".zh">账号或密码错误，请重新输入</span><span class=".en">Wrong Email or code.</span></em><i class="icon-warn"></i></span>
                 </p>
                 <p class="p-input pos">
-                    <label for="veri-code">输入验证码</label>
+                    <label for="veri-code"><span class=".zh">输入验证码</span><span class=".en">Please input the code you received..</span></label>
                     <input type="number" id="veri-code">
-                    <a href="javascript:;" class="send">发送验证码</a>
+                    <a href="javascript:;" class="send"><span class=".zh">发送验证码</span><span class=".en">Send code</span></a>
                     <span class="time hide"><em>120</em>s</span>
-                    <span class="tel-warn error hide">验证码错误</span>
+                    <span class="tel-warn error hide"><span class=".zh">验证码错误</span><span class=".en">Wrong code</span></span>
                 </p>
             </div>
 
@@ -62,9 +62,9 @@
                     <span class="z"><i class="icon-ok-sign boxcol" nullmsg="请同意!"></i></span>
                     <input type="hidden" id="agree" name="agree" value="1">
                     <div class="Validform_checktip"></div>
-                    <p>我已阅读并接受 <a id="ag" href="#">《Ushio用户协议说明》</a></p>
+                    <p><span class=".zh">我已阅读并接受 <a id="ag" href="#">《Ushio用户协议说明》</a></span><span class=".en">I had read and accepted the <a id="ag" href="#">《Ushio Service Agreement》</a></span></p>
                 </div>
-            <button class="lang-btn off log-btn">更新</button>
+            <button class="lang-btn off log-btn"><span class=".zh">更新</span><span class=".en">Update</span></button>
             <!--<div class="third-party">
                 <a href="#" class="log-qq icon-qq-round"></a>
                 <a href="#" class="log-qq icon-weixin"></a>

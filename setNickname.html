@@ -23,8 +23,9 @@
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/iconfont.css">
     <link rel="stylesheet" href="./css/reg.css">
-    <script type="text/javascript">block_aplayer = true;</script>
+    <script type="text/javascript">block_aplayer = true;lang = ['zh', 'en'];</script>
     <script src="https://cdn.yimian.xyz/ushio-js/ushio-head.min.js"></script>
+    <script type="text/javascript">page.proj = 'iotcat/ushio-login';</script>
 </head>
 <body>
 <div id="ajax-hook"></div>
@@ -32,13 +33,13 @@
 <div class="wrap"><div id="site-landing"></div>
     <div class="wpn">
         <div class="form-data find_password" style="top: 30%;">
-            <h4>输入昵称</h4>
+            <h4><span class=".zh">输入昵称</span><span class=".en">Please input your nickname</span></h4>
             <p class="p-input pos">
-                <label for="nickname">昵称</label>
+                <label for="nickname"><span class=".zh">昵称</span><span class=".en">Nickname</span></label>
                 <input type="text" id="nickname">
                 <span class="tel-warn pc_tel-err hide"><em></em><i class="icon-warn"></i></span>
             </p>
-            <button class="lang-btn next">更新</button>
+            <button class="lang-btn next"><span class=".zh">更新</span><span class=".en">Update</span></button>
             <p class="right">© 2018-<script type="text/javascript">document.write(new Date().getFullYear())</script> <a href="https://iotcat.me">iotcat</a> | Powered by <a href="https://ushio.cool">Ushio</a></p>
         </div>
     </div>
@@ -81,30 +82,45 @@
     $('.lang-btn').click(function(){
         var nickname = $('#nickname').val();
         if(nickname.length < 3){
-            tips.warning({
-                message: "昵称太短啦！！"
-            });
+            if(page.tran.getLang() == 'zh')
+                tips.warning({
+                    message: "昵称太短啦！！"
+                });
+            else
+                tips.warning({
+                    message: "Too short!!"
+                });
             return;
         }
         if(nickname.length > 40){
-            tips.warning({
-                message: "昵称太长啦！！"
-            });
+            if(page.tran.getLang() == 'zh')
+                tips.warning({
+                    message: "昵称太长啦！！"
+                });
+            else
+                tips.warning({
+                    message: "Too long!!"
+                });
             return;
         }
         session.onload(function(){
             $.get('/api/checkUpdate.php?hash='+session.get('hash')+'&nickname='+nickname, function(data){
                 data = JSON.parse(data);
                 if(data.code == 200){
-                    tips.success({
-                        message: '更新成功！'
-                    });
+                    if(page.tran.getLang() == 'zh')
+                        tips.success({
+                            message: '更新成功！'
+                        });
+                    else
+                        tips.success({
+                            message: 'Update Successfully!!'
+                        });
                     var to = 'https://user.yimian.xyz/';
                     if(cookie.get('_from')){
                         to = decodeURI(cookie.get('_from'));
                         cookie.del('_from');
                     }
-                    window.location.href=to;
+                    window.location.replace(to);
                 }else{
                     tips.warning({
                         message: data.message

@@ -23,9 +23,9 @@
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/iconfont.css">
     <link rel="stylesheet" href="./css/reg.css">
-    <script type="text/javascript">block_aplayer = true;</script>
+    <script type="text/javascript">block_aplayer = true;lang = ['zh', 'en'];</script>
     <script src="https://cdn.yimian.xyz/ushio-js/ushio-head.min.js"></script>
-
+    <script type="text/javascript">page.proj = 'iotcat/ushio-login';</script>
 </head>
 <body>
 
@@ -35,33 +35,42 @@
         <div class="form-data pos" id="box" >
             <a href=""><img src="./img/logo.png" class="head-logo"></a>
             <div class="change-login">
-                <p class="account_number on">邮箱登录</p>
-                <p class="message">短信登录</p>
+                <p class="account_number on"><span class=".zh">邮箱登录</span><span class=".en">By Email</span></p>
+                <p class="message"><span class=".zh">短信登录</span><span class=".en">By SMS</span></p>
             </div>
             <div class="form1">
                 <p class="p-input pos">
-                    <label for="num" id="lab_num">邮箱</label>
+                    <label for="num" id="lab_num"><span class=".zh">邮箱</span><span class=".en">Email</span></label>
                     <input type="text" id="num">
                     <input type="number" id="num2" class="hide">
-                    <span class="tel-warn num-err hide"><em>账号或密码错误，请重新输入</em><i class="icon-warn"></i></span>
+                    <span class="tel-warn num-err hide"><em><span class=".zh">账号或密码错误，请重新输入</span><span class=".en">Email or Password does not match! please try again.</span></em><i class="icon-warn"></i></span>
                 </p>
                 <p class="p-input pos">
-                    <label for="veri-code">输入验证码</label>
+                    <label for="veri-code"><span class=".zh">输入验证码</span><span class=".en">Input the code you received..</span></label>
                     <input type="number" id="veri-code">
-                    <a href="javascript:;" class="send">发送验证码</a>
+                    <a href="javascript:;" class="send"><span class=".zh">发送验证码</span><span class=".en">Send code</span></a>
                     <span class="time hide"><em>120</em>s</span>
-                    <span class="tel-warn error hide">验证码错误</span>
+                    <span class="tel-warn error hide"><span class=".zh">验证码错误</span><span class=".en">Wrong code!</span></span>
                 </p>
             </div>
                 <div class="reg_checkboxline pos">
                     <span class="z"><i class="icon-ok-sign boxcol" nullmsg="请同意!"></i></span>
                     <input type="hidden" id="agree" name="agree" value="1">
                     <div class="Validform_checktip"></div>
-                    <p>我已阅读并接受 <a id="ag" href="#">《Ushio用户协议说明》</a></p>
-                    <script>$('#ag').click(function(){tips.info({
+                    <p><span class=".zh">我已阅读并接受 <a id="ag" href="#">《Ushio用户协议说明》</a></span><span class=".en">I had read and accepted the <a id="ag" href="#">《Ushio Service Agreement》</a></span></p>
+                    <script>$('#ag').click(function(){
+                    if(page.tran.getLang() == 'zh')
+                        tips.info({
 timeout: 150000,
 message: '1. 为了更好地提供服务，本站需要您提供一个联系方式。本站承诺不会将此联系方式透露给任何其它客体，此联系方式仅用作本站通知您的一种方式。<br>2. 请您在使用本站服务时，务必遵守本地法律法规。对于类似原因引起的纠纷，本站概不负责。<br>3. 请勿将账户给与其它人使用，一经发现本站有权停止此账户在本站的所有权限，并将相关行为人拉入黑名单。'
-})})</script>
+});
+                    else
+                        tips.info({
+timeout: 150000,
+message: '1. In order to provide better services, this site needs you to provide a contact information. This site promises not to disclose this contact information to any other objects, this contact information is only used as a way for this site to notify you. <br>2. Please be sure to abide by local laws and regulations when using the services of this site. This site is not responsible for disputes caused by similar reasons. <br>3. Please do not use the account with other people. Once it is discovered that this site has the right to stop all permissions of this account on this site, and the relevant actors will be blacklisted.'
+});        
+
+})</script>
 
                 </div>
             <!--<div class="r-forget cl">
@@ -69,7 +78,7 @@ message: '1. 为了更好地提供服务，本站需要您提供一个联系方�
                 <a href="./getpass.html" class="y">忘记密码</a>
             </div>-->
 
-            <button class="lang-btn off log-btn">登录/注册</button>
+            <button class="lang-btn off log-btn"><span class=".zh">登录/注册</span><span class=".en">Login/Register</span></button>
             <!--<div class="third-party">
                 <a href="#" class="log-qq icon-qq-round"></a>
                 <a href="#" class="log-qq icon-weixin"></a>
@@ -99,7 +108,7 @@ message: '1. 为了更好地提供服务，本站需要您提供一个联系方�
 
 session.onload(()=>{
     if(session.get('group') != 'anonymous'){
-        window.location.href = '/'+(page.params.hasOwnProperty('require')?('?require='+page.params.require):'');
+        window.location.replace('/'+(page.params.hasOwnProperty('require')?('?require='+page.params.require):''));
     }        
 });
 </script>

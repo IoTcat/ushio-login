@@ -13,7 +13,10 @@ $(function(){
         $(".message").removeClass("on");
         $("#num2").addClass("hide");
         $("#num").removeClass("hide");
-        $("#lab_num").html('邮箱');
+        if(page.tran.getLang() == 'zh')
+        	$("#lab_num").html('邮箱');
+        else
+        	$("#lab_num").html('Email');
     });
 	// 选项卡切换
 	$(".message").click(function () {
@@ -24,7 +27,10 @@ $(function(){
         $(".account_number").removeClass("on");
         $("#num").addClass("hide");
         $("#num2").removeClass("hide");
-        $("#lab_num").html('手机号');
+        if(page.tran.getLang() == 'zh')
+        	$("#lab_num").html('手机号');
+        else
+        	$("#lab_num").html('Phone Number');
 		
     });
 
@@ -37,18 +43,21 @@ $(function(){
 	        $(".account_number").removeClass("on");
 	        $("#num").addClass("hide");
 	        $("#num2").removeClass("hide");
-	        $("#lab_num").html('手机号');
+	        if(page.tran.getLang() == 'zh')
+	        	$("#lab_num").html('手机号');
+	        else
+	        	$("#lab_num").html('Phone Number');
 	        $('.change-login').hide();
 	    }
 	    session.onload(function(){
 	    	if(session.get('group') == 'anonymous' || !session.get('hash')){
-	    		window.location.href = '/login.html?require='+page.params.require;
+	    		window.location.replace('/login.html?require='+page.params.require);
 	    	}
 	    });
 	}else{
 	    session.onload(function(){
 	    	if(session.get('group') == 'anonymous' || !session.get('hash')){
-	    		window.location.href = '/login.html';
+	    		window.location.replace('/login.html');
 	    	}
 	    });
 	}
@@ -101,14 +110,20 @@ $(function(){
 
 			var status = true;
 			if (phone == '') {
-				$('.num-err').removeClass('hide').find("em").text('请输入邮箱');
+				if(page.tran.getLang() == 'zh')
+					$('.num-err').removeClass('hide').find("em").text('请输入邮箱');
+				else
+					$('.num-err').removeClass('hide').find("em").text('Please input your Email!!');
 				return false;
 			}
 			var param = /^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/;
 			if (!param.test(phone)) {
 				// globalTip({'msg':'手机号不合法，请重新输入','setTime':3});
 				$('.num-err').removeClass('hide');
-				$('.num-err').text('邮箱不合法，请重新输入');
+				if(page.tran.getLang() == 'zh')
+					$('.num-err').text('邮箱不合法，请重新输入');
+				else
+					$('.num-err').text('Illegal Email!!');
 				return false;
 			}
 		}else{
@@ -116,14 +131,19 @@ $(function(){
 
 			var status = true;
 			if (phone == '') {
-				$('.num-err').removeClass('hide').find("em").text('请输入手机号');
+				if(page.tran.getLang() == 'zh')
+					$('.num-err').removeClass('hide').find("em").text('请输入手机号');
+				else
+					$('.num-err').removeClass('hide').find("em").text('Please input your phone number!');
 				return false;
 			}
 			var param = /^1[34578]\d{9}$/;
 			if (!param.test(phone)) {
 				// globalTip({'msg':'手机号不合法，请重新输入','setTime':3});
-				$('.num-err').removeClass('hide');
-				$('.num-err').text('手机号不合法，请重新输入');
+				if(page.tran.getLang() == 'zh')
+					$('.num-err').text('请输入中国大陆11位手机号');
+				else
+					$('.num-err').text('Only support the phone number in Mainland China');
 				return false;
 			}
 
@@ -136,7 +156,10 @@ $(function(){
 	function checkCode(pCode){
 		checkBtn();
 		if (pCode == '') {
-			$('.error').removeClass('hide').text('请输入验证码');
+			if(page.tran.getLang() == 'zh')
+				$('.error').removeClass('hide').text('请输入验证码');
+			else
+				$('.error').removeClass('hide').text('Please input the code you received.');
 			return false;
 		} else if(pCode.length ==6){
 			$('.error').addClass('hide');
@@ -151,7 +174,10 @@ $(function(){
 					oSend = $(".form-data .send"),
 					oEm = $(".form-data .time em");
 	                clearInterval(timer);
-	                oSend.text("验证成功");
+	                if(page.tran.getLang() == 'zh')
+	                	oSend.text("验证成功");
+	                else
+	                	oSend.text("Verified!");
 	                oSend.css("color", 'green');
 				    oSend.show();
 	                oEm.text("120");
@@ -159,7 +185,10 @@ $(function(){
                     sendBtn();
 	                $('.error').addClass('hide')
 				}else{
-					$('.error').removeClass('hide').text('验证码错误！');
+					if(page.tran.getLang() == 'zh')
+						$('.error').removeClass('hide').text('验证码错误！');
+					else
+						$('.error').removeClass('hide').text('Wrong code!');
                     checkBtn();
 				}
 
@@ -185,13 +214,16 @@ $(function(){
 			$.get('/api/checkUpdate.php?thash='+hash+'&hash='+session.get('hash'), function(data){
 	            data = JSON.parse(data);
 				if(data.code == 200){
+				if(page.tran.getLang() == 'zh')
 					tips.success({message: '更新成功！'});
+				else
+					tips.success({message: 'Update successfully!!'});
 	                var to = 'https://user.yimian.xyz/';
 	                if(cookie.get('_from')){
 	                    to = decodeURI(cookie.get('_from'));
 	                    cookie.del('_from');
 	                }
-					window.location.href=to;
+					window.location.replace(to);
 				}else{
 					tips.warning({message: data.message});
 	                setTimeout(()=>{window.location.reload()}, 2000);
@@ -249,7 +281,10 @@ $(function(){
 
 		                } else {
 			                clearInterval(timer);
-			                oSend.text("重新发送验证码");
+			                if(page.tran.getLang() == 'zh')
+			                	oSend.text("重新发送验证码");
+			                else
+			                	oSend.text("Resend code");
 			                oSend.css("color", 'red');
 						    oSend.show();
 			                oEm.text("120");
@@ -258,7 +293,10 @@ $(function(){
 		            },
 		            error:function(){
 		                clearInterval(timer);
-		                oSend.text("重新发送验证码");
+		                if(page.tran.getLang() == 'zh')
+		                	oSend.text("重新发送验证码");
+		                else
+		                	oSend.text("Resend code");
 		                oSend.css("color", 'red');
 					    oSend.show();
 		                oEm.text("120");
