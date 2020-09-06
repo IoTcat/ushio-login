@@ -57,8 +57,8 @@
                     <span class="z"><i class="icon-ok-sign boxcol" nullmsg="请同意!"></i></span>
                     <input type="hidden" id="agree" name="agree" value="1">
                     <div class="Validform_checktip"></div>
-                    <p><span class=".zh">我已阅读并接受 <a id="ag" href="#">《Ushio用户协议说明》</a></span><span class=".en">I had read and accepted the <a id="ag" href="#">《Ushio Service Agreement》</a></span></p>
-                    <script>$('#ag').click(function(){
+                    <p><span class=".zh">我已阅读并接受 <a class="ag" href="#">《Ushio用户协议说明》</a></span><span class=".en">I accepted <a class="ag" href="#">《Ushio Service Agreement》</a></span></p>
+                    <script>$('.ag').click(function(){
                     if(page.tran.getLang() == 'zh')
                         tips.info({
 timeout: 150000,

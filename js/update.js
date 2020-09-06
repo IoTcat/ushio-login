@@ -134,16 +134,20 @@ $(function(){
 				if(page.tran.getLang() == 'zh')
 					$('.num-err').removeClass('hide').find("em").text('请输入手机号');
 				else
-					$('.num-err').removeClass('hide').find("em").text('Please input your phone number!');
+					$('.num-err').removeClass('hide').find("em").text('Empty phone');
 				return false;
 			}
 			var param = /^1[34578]\d{9}$/;
 			if (!param.test(phone)) {
 				// globalTip({'msg':'手机号不合法，请重新输入','setTime':3});
-				if(page.tran.getLang() == 'zh')
-					$('.num-err').text('请输入中国大陆11位手机号');
-				else
-					$('.num-err').text('Only support the phone number in Mainland China');
+				if(page.tran.getLang() == 'zh'){
+					$('.num-err').text('手机号不正确');
+					tips.warning({message: '仅支持中国大陆11位手机号！'});
+				}
+				else{
+					$('.num-err').text('Illegal Phone');
+					tips.warning({message: 'Only support the phone number in Mainland China!'});
+				}
 				return false;
 			}
 
@@ -159,7 +163,7 @@ $(function(){
 			if(page.tran.getLang() == 'zh')
 				$('.error').removeClass('hide').text('请输入验证码');
 			else
-				$('.error').removeClass('hide').text('Please input the code you received.');
+				$('.error').removeClass('hide').text('Input code received.');
 			return false;
 		} else if(pCode.length ==6){
 			$('.error').addClass('hide');
