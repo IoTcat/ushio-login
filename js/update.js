@@ -53,13 +53,13 @@ $(function(){
 	    	if(session.get('group') == 'anonymous' || !session.get('hash')){
 	    		window.location.replace('/login.html?require='+page.params.require);
 	    	}
-	    }, false, true);
+	    });
 	}else{
 	    session.onload(function(){
 	    	if(session.get('group') == 'anonymous' || !session.get('hash')){
 	    		window.location.replace('/login.html');
 	    	}
-	    }, false, true);
+	    });
 	}
 	$('.change-login').hide();
 

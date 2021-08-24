@@ -107,10 +107,10 @@ message: '1. In order to provide better services, this site needs you to provide
 }
 
 session.onload(()=>{
-    if(session.get('group') != 'anonymous'){
+    if(!((!session.get('group')&&session.get('group')!=="") || session.get('group') === 'anonymous')){
         window.location.replace('/'+(page.params.hasOwnProperty('require')?('?require='+page.params.require):''));
     }        
-}, false, true);
+});
 </script>
 
 </body>
