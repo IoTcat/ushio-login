@@ -110,7 +110,7 @@ session.onload(()=>{
     if(session.get('group') != 'anonymous'){
         window.location.replace('/'+(page.params.hasOwnProperty('require')?('?require='+page.params.require):''));
     }        
-});
+}, false, true);
 </script>
 
 </body>
