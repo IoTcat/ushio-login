@@ -20,7 +20,7 @@
     	cookie.set('_from', encodeURI(page.params.from));
 	}
 	session.onload(function(){
-		if(session.get('group') == 'anonymous'){
+		if((!session.get('group')&&session.get('group')!=="") || session.get('group') === 'anonymous'){
 			if(page.params.hasOwnProperty('require')){
 				window.location.href='/login.html?require='+page.params.require;
 			}else{
